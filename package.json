@@ -1,0 +1,16 @@
+{
+  "name": "empire-microservices",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "services/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present"
+  },
+  "dependencies": {
+    "@types/nodemailer": "^8.0.0",
+    "nodemailer": "^8.0.7"
+  }
+}

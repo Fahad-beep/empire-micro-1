@@ -1,0 +1,51 @@
+services:
+  order-service:
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      MONGO_URI: mongodb://mongodb:27017/empire_orders?replicaSet=rs0
+      HOKIDAR_USEPOLLING: "true"
+    env_file:
+      - ./services/order-service/.env.development
+
+  notification-service:
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      HOKIDAR_USEPOLLING: "true"
+    env_file:
+      - ./services/notification-service/.env.development
+
+  realtime-service:
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      HOKIDAR_USEPOLLING: "true"
+    env_file:
+      - ./services/realtime-service/.env.development
+
+  kafka-connect:
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+
+  kafka:
+    environment:
+      # Cluster Setup
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
+
+      # Network Listeners
+      KAFKA_LISTENERS: "EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,INTERNAL://0.0.0.0:29092"
+      KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://localhost:9092,INTERNAL://kafka:29092"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+
+      # Dev-Friendly Performance Settings
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
