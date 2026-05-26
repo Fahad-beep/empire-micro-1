@@ -2,3 +2,4 @@ node_modules
 package.lock*
 dist
 .env*
+devcontainer-lock.json
