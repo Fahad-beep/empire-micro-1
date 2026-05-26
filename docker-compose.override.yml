@@ -1,25 +1,25 @@
 services:
-  order-service:
-    environment:
-      BOOTSTRAP_SERVERS: kafka:29092
-      MONGO_URI: mongodb://mongodb:27017/empire_orders?replicaSet=rs0
-      HOKIDAR_USEPOLLING: "true"
-    env_file:
-      - ./services/order-service/.env.development
+  # order-service:
+  #   environment:
+  #     BOOTSTRAP_SERVERS: kafka:29092
+  #     MONGO_URI: mongodb://mongodb:27017/empire_orders?replicaSet=rs0
+  #     HOKIDAR_USEPOLLING: "true"
+  #   env_file:
+  #     - ./services/order-service/.env.development
 
-  notification-service:
-    environment:
-      BOOTSTRAP_SERVERS: kafka:29092
-      HOKIDAR_USEPOLLING: "true"
-    env_file:
-      - ./services/notification-service/.env.development
+  # notification-service:
+  #   environment:
+  #     BOOTSTRAP_SERVERS: kafka:29092
+  #     HOKIDAR_USEPOLLING: "true"
+  #   env_file:
+  #     - ./services/notification-service/.env.development
 
-  realtime-service:
-    environment:
-      BOOTSTRAP_SERVERS: kafka:29092
-      HOKIDAR_USEPOLLING: "true"
-    env_file:
-      - ./services/realtime-service/.env.development
+  # realtime-service:
+  #   environment:
+  #     BOOTSTRAP_SERVERS: kafka:29092
+  #     HOKIDAR_USEPOLLING: "true"
+  #   env_file:
+  #     - ./services/realtime-service/.env.development
 
   kafka-connect:
     environment:
@@ -37,11 +37,18 @@ services:
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
 
       # Network Listeners
-      KAFKA_LISTENERS: "EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,INTERNAL://0.0.0.0:29092"
-      KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://localhost:9092,INTERNAL://kafka:29092"
+      # KAFKA_LISTENERS: "EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,INTERNAL://0.0.0.0:29092"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
+      # in local machine
+      # KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://localhost:9092,INTERNAL://kafka:29092,CONTROLLER://kafka:9093"
+      # in Dev Container
+      # KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://host.docker.internal:9092,INTERNAL://kafka:29092,CONTROLLER://kafka:9093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092,CONTROLLER://kafka:9093"
       KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT"
-      KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+      # KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+      # KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
 
       # Dev-Friendly Performance Settings
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1

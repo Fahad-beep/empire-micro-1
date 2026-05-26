@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd -f ./services/notification-service/.env.development tsx watch src/index.ts",
+    "dev": "env-cmd -f .env.development tsx watch src/index.ts",
     "container:dev": "tsx watch src/index.ts",
-    "start": "env-cmd -f ./services/notification-service/.env.production node dist/index.js"
+    "start": "env-cmd -f .env.production node dist/index.js"
   },
   "type": "module",
   "keywords": [],

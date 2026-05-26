@@ -21,5 +21,6 @@
       ]
     }
   },
+  "runArgs": ["--add-host=kafka:host-gateway"],
   "postCreateCommand": "npm install"
 }

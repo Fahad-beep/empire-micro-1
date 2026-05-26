@@ -7,7 +7,9 @@
     "services/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present"
+    "dev": "npm run dev --workspaces --if-present",
+    "build:shared": "npm run build --workspace=packages/shared",
+    "build:all": "npm run build --workspaces --if-present"
   },
   "dependencies": {
     "@types/nodemailer": "^8.0.0",

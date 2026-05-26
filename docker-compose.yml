@@ -64,55 +64,55 @@ services:
       - kafka-tier-net
       - database-tier-net
 
-  order-service:
-    container_name: empire-order
-    build:
-      context: .
-      dockerfile: ./services/order-service/Dockerfile
-    ports:
-      - "4001:4001"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    restart: on-failure
-    depends_on:
-      mongodb:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-    networks:
-      - kafka-tier-net
-      - database-tier-net
+  # order-service:
+  #   container_name: empire-order
+  #   build:
+  #     context: .
+  #     dockerfile: ./services/order-service/Dockerfile
+  #   ports:
+  #     - "4001:4001"
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   restart: on-failure
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #     kafka:
+  #       condition: service_healthy
+  #   networks:
+  #     - kafka-tier-net
+  #     - database-tier-net
 
-  notification-service:
-    container_name: empire-notification
-    build:
-      context: .
-      dockerfile: ./services/notification-service/Dockerfile
-    depends_on:
-      kafka:
-        condition: service_healthy
-    restart: on-failure
-    volumes:
-      - .:/app
-      - /app/node_modules
-    networks:
-      - kafka-tier-net
+  # notification-service:
+  #   container_name: empire-notification
+  #   build:
+  #     context: .
+  #     dockerfile: ./services/notification-service/Dockerfile
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
+  #   restart: on-failure
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - kafka-tier-net
 
-  realtime-service:
-    container_name: empire-realtime
-    build:
-      context: .
-      dockerfile: ./services/realtime-service/Dockerfile
-    depends_on:
-      kafka:
-        condition: service_healthy
-    restart: on-failure
-    volumes:
-      - .:/app
-      - /app/node_modules
-    networks:
-      - kafka-tier-net
+  # realtime-service:
+  #   container_name: empire-realtime
+  #   build:
+  #     context: .
+  #     dockerfile: ./services/realtime-service/Dockerfile
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
+  #   restart: on-failure
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - kafka-tier-net
 
   empire-redis:
     image: redis:7-alpine
